@@ -290,27 +290,35 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         buildParametersYml: function(){
-            this.template('_parameters.yml', 'app/config.parameters.yml');
+            this.template('app/config/parameters.yml', 'app/config.parameters.yml');
         },
 
         buildComposerJson: function(){
-            this.template("_composer.json", "composer.json");
-            this.template("_composer.lock", "composer.lock");
+            this.template('_composer.json', 'composer.json');
+            this.template('_composer.lock', 'composer.lock');
         },
 
         buildConfig: function() {
-            this.template("_config.yml", "app/config/config.yml");
+            this.template('app/config/config.yml', 'app/config/config.yml');
         },
 
         buildAppKernel: function() {
-            this.template("_AppKernel.php", "./app/AppKernel.php");
+            this.template('_AppKernel.php', 'app/AppKernel.php');
         },
+
+        buildAppTest: function() {
+          this.template('web/app_test.php', 'web/app_test.php');
+        },
+
+        copyGarden: function() {
+          this.directory('garden', 'garden');
+        }
 
     },
 
     install: function () {
         this.installDependencies({
-            skipInstall: this.options['skip-install']
+            skipInstall: false
         });
     },
 
@@ -353,6 +361,10 @@ module.exports = yeoman.generators.Base.extend({
             fs.writeFileSync(appKernelPath, newAppKernelContents);
         },
 
+        installGardenDependencies: function(){
+          this.spawnCommand('npm', ['install'], { 'cwd': 'garden' });
+        },
+
         addBundleComposer: function(){
 
             if (this.fixturebundle) {
@@ -369,8 +381,5 @@ module.exports = yeoman.generators.Base.extend({
 
             this.spawnCommand('composer', ['install', '--no-interaction']);
         }
-
-
-
     }
 });

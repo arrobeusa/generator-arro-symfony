@@ -1,0 +1,74 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Create new <%= resourceNameLower %></div>
+        <div class="panel-body">
+          <div class="input-group">
+            <span class="input-group-addon">@</span>
+            <input name="<%= resourceNameLower %>Name" ng-model="<%= resourceNameLower %>Name" type="text" class="form-control" placeholder="<%= resourceName %>name" aria-describedby="basic-addon1">
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-md-12">
+              <button type="button" class="create-new-button btn btn-default" ng-click="createNew()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Create
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="<%= pluralResourceNameLower %>-list" class="col-lg-12">
+
+      <div class="alert alert-success feedback" ng-show="showFeedback" role="alert">Success</div>
+
+      <div ng-repeat="<%= resourceNameLower %> in <%= pluralResourceNameLower %>" class="<%= resourceNameLower %> panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="<%= resourceNameLower %>-name col-md-9" ng-init="isCollapsed = true">
+              <span>{{<%= resourceNameLower %>.name}}</span>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-default btn-xs" ng-click="isCollapsed = !isCollapsed">
+                <span class="<%= resourceNameLower %>-edit-button glyphicon glyphicon-edit" aria-hidden="true"></span>Edit
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="delete<%= resourceName %>(<%= resourceNameLower %>)">
+                <span class="<%= resourceNameLower %>-delete-button glyphicon glyphicon-trash" aria-hidden="true"></span>Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer" collapse="isCollapsed">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <input name="edit<%= resourceName %>Name" ng-model="<%= resourceNameLower %>.name" ng-blur="change(<%= resourceNameLower %>)" type="text" class="form-control" placeholder="<%= resourceName %>name" aria-describedby="basic-addon1">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Done
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>Copyright (c) 2015 Rakuten Marketing</p>
+  </div>
+</footer>
