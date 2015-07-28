@@ -309,6 +309,10 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     install: function () {
+
+        // TODO: install garden
+        //this.npmInstall(['lodash'], { 'saveDev': true });
+
         this.installDependencies({
             skipInstall: this.options['skip-install']
         });

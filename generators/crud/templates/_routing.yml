@@ -1,0 +1,28 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+<%= resourceNameLower %>_create:
+    pattern: /<%= pluralResourceNameLower %>/
+    defaults: { _controller: "AppBundle:<%= pluralResourceName %>:create", _format:json }
+    requirements: { _method: post, _format: json|html }
+
+<%= resourceNameLower %>_show:
+    pattern: /<%= pluralResourceNameLower %>/{id}
+    defaults: { _controller: "AppBundle:<%= pluralResourceName %>:show", _format:json }
+    requirements: { _method: get, _format: json|html }
+
+<%= resourceNameLower %>_update:
+    pattern: /<%= pluralResourceNameLower %>/{id}
+    defaults: { _controller: "AppBundle:<%= pluralResourceName %>:update", _format:json }
+    requirements: { _method: put, _format: json|html }
+
+<%= resourceNameLower %>_delete:
+    pattern: /<%= pluralResourceNameLower %>/{id}
+    defaults: { _controller: "AppBundle:<%= pluralResourceName %>:delete", _format:json }
+    requirements: { _method: delete, _format: json|html }
+
+<%= resourceNameLower %>_show_list:
+    pattern: /<%= pluralResourceNameLower %>/
+    defaults: { _controller: "AppBundle:<%= pluralResourceName %>:list", _format:json }
+    requirements: { _method: get, _format: json|html }
