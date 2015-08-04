@@ -1,4 +1,4 @@
-Feature: Features API
+Feature: <%= pluralResourceName %> API
 
   @fixtures.load
   Background:
@@ -8,114 +8,104 @@ Feature: Features API
       | Accept       | application/json |
 
 
-  Scenario: Show a list of Features
+  Scenario: Show a list of <%= pluralResourceName %>
 
     #Given I am a user with security token "IAmAValidToken"
 
-    When I make a GET request to "/app_test.php/features/"
+    When I make a GET request to "/app_test.php/<%= pluralResourceNameLower %>/"
     Then the status code should be 200
     Then the response should be:
     """
     [
       {
         "id": "5467ab88e8a2582108000000",
-        "name": "A really cool new feature ",
-        "active": true
+        "name": "A really cool new <%=resourceName %> "
       },
       {
         "id": "55be97418e6e627140000007",
-        "name": "Another new feature",
-        "active": true
+        "name": "Another new <%=resourceName %>"
       },
       {
         "id": "55be8ee58e6e627140000000",
-        "name": "One more cool feature",
-        "active": true
+        "name": "One more cool <%=resourceName %>"
       }
     ]
     """
 
-  Scenario: Create a new Feature
+  Scenario: Create a new <%= resourceName %>
 
     Given body of request:
     """
     {
-        "name": "A different Feature that I created (in the test environment)."
+        "name": "A different <%= resourceName %> that I created (in the test environment)."
     }
     """
-    When I make a POST request to "/app_test.php/features/"
+    When I make a POST request to "/app_test.php/<%= pluralResourceNameLower %>/"
     Then the status code should be 200
 
     Then the response should be the following, taking into account that "id" are dynamic fields
     """
     {
       "id": "",
-      "name": "A different Feature that I created (in the test environment).",
-      "active": true
+      "name": "A different <%= resourceName %> that I created (in the test environment)."
     }
     """
 
-  Scenario: Update an existing Feature
-
-    Given body of request:
-    """
-    {
-        "id": "5467ab88e8a2582108000000",
-        "name": "An existing Feature that I am updating",
-        "active": true
-    }
-    """
-    When I make a PUT request to "/app_test.php/features/5467ab88e8a2582108000000/"
-    Then the status code should be 200
-    Then the response should be:
-    """
-    {
-      "id": "5467ab88e8a2582108000000",
-      "name": "An existing Feature that I am updating",
-      "active": true
-    }
-    """
-
-    When I make a GET request to "/app_test.php/features/5467ab88e8a2582108000000/"
-    Then the status code should be 200
-    Then the response should be:
-    """
-    {
-      "id": "5467ab88e8a2582108000000",
-      "name": "An existing Feature that I am updating",
-      "active": true
-    }
-    """
-
-  Scenario: Disable a Feature
+  Scenario: Update an existing <%= resourceName %>
 
     Given body of request:
     """
     {
         "id": "5467ab88e8a2582108000000",
-        "name": "An existing Feature that I am disabling",
-        "active": false
+        "name": "An existing <%= resourceName %> that I am updating"
     }
     """
-    When I make a PUT request to "/app_test.php/features/5467ab88e8a2582108000000/"
+    When I make a PUT request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
     Then the status code should be 200
     Then the response should be:
     """
     {
       "id": "5467ab88e8a2582108000000",
-      "name": "An existing Feature that I am disabling",
-      "active": false
+      "name": "An existing <%= resourceName %> that I am updating"
     }
     """
 
-    When I make a GET request to "/app_test.php/features/5467ab88e8a2582108000000/"
+    When I make a GET request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
     Then the status code should be 200
     Then the response should be:
     """
     {
       "id": "5467ab88e8a2582108000000",
-      "name": "An existing Feature that I am disabling",
-      "active": false
+      "name": "An existing <%= resourceName %> that I am updating"
+    }
+    """
+
+  Scenario: Disable a <%= resourceName %>
+
+    Given body of request:
+    """
+    {
+        "id": "5467ab88e8a2582108000000",
+        "name": "An existing <%= resourceName %> that I am disabling"
+    }
+    """
+    When I make a PUT request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
+    Then the status code should be 200
+    Then the response should be:
+    """
+    {
+      "id": "5467ab88e8a2582108000000",
+      "name": "An existing <%= resourceName %> that I am disabling"
+    }
+    """
+
+    When I make a GET request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
+    Then the status code should be 200
+    Then the response should be:
+    """
+    {
+      "id": "5467ab88e8a2582108000000",
+      "name": "An existing <%= resourceName %> that I am disabling"
     }
     """
 
@@ -124,10 +114,10 @@ Feature: Features API
 
 #    Given I am a user with security token "IAmAValidToken"
 
-    When I make a GET request to "/app_test.php/features/12345"
+    When I make a GET request to "/app_test.php/<%= pluralResourceNameLower %>/12345"
     Then the status code should be 404
 
-    When I make a PUT request to "/app_test.php/features/12345/"
+    When I make a PUT request to "/app_test.php/<%= pluralResourceNameLower %>/12345/"
     Then the status code should be 404
 
 
@@ -137,7 +127,7 @@ Feature: Features API
 #    #Given I am a user with security token "XXXXX"
 #
 #    And an empty request body
-#    When I make a POST request to "/app_test.php/features/"
+#    When I make a POST request to "/app_test.php/<%= pluralResourceNameLower %>/"
 #    Then the status code should be 400
 #
 #    Given body of request:
@@ -146,7 +136,7 @@ Feature: Features API
 #        "name": ""
 #    }
 #    """
-#    When I make a POST request to "/app_test.php/features/"
+#    When I make a POST request to "/app_test.php/<%= pluralResourceNameLower %>/"
 #    Then the status code should be 400
 #
 #    Given body of request:
@@ -155,15 +145,15 @@ Feature: Features API
 #        "bad_column_name": ""
 #    }
 #    """
-#    When I make a POST request to "/app_test.php/features/"
+#    When I make a POST request to "/app_test.php/<%= pluralResourceNameLower %>/"
 #    Then the status code should be 400
 
 
 
 
-#    # Feature Update
+#    # <%= resourceName %> Update
 #    And an empty request body
-#    When I make a PUT request to "/app_test.php/features/5467ab88e8a2582108000000/"
+#    When I make a PUT request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
 #    Then the status code should be 400
 #
 #    Given body of request:
@@ -172,7 +162,7 @@ Feature: Features API
 #        "name": ""
 #    }
 #    """
-#    When I make a PUT request to "/app_test.php/features/5467ab88e8a2582108000000/"
+#    When I make a PUT request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
 #    Then the status code should be 400
 #
 #    Given body of request:
@@ -181,13 +171,13 @@ Feature: Features API
 #        "bad_column_name": ""
 #    }
 #    """
-#    When I make a PUT request to "/app_test.php/features/5467ab88e8a2582108000000/"
+#    When I make a PUT request to "/app_test.php/<%= pluralResourceNameLower %>/5467ab88e8a2582108000000/"
 #    Then the status code should be 400
 #
 #  Scenario: Request with an invalid token
 #
 ##    Given I am a user with security token "XYZ"
 #
-#    When I make a GET request to "/app_test.php/features/"
+#    When I make a GET request to "/app_test.php/<%= pluralResourceNameLower %>/"
 ##    Then the status code should be 403
 

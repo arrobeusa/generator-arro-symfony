@@ -27,6 +27,7 @@ class <%= resourceName %>
     /**
      * @MongoDB\String
      * @Assert\Type(type="string")
+     * @Assert\NotBlank
      * @JMS\Expose
      * @JMS\Type("string")
      *

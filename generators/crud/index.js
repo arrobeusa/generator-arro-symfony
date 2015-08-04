@@ -44,8 +44,6 @@ module.exports = yeoman.generators.Base.extend({
      */
     configuring: {
         buildNames: function(){
-            console.log('>>>>> configuring can be so boring');
-
             this.names = {
                 "resourceName"             : this.resourceName,
                 "resourceNameLower"        : this.resourceName.toLowerCase(),
@@ -60,8 +58,8 @@ module.exports = yeoman.generators.Base.extend({
      */
     default: {
         default: function(){
-            console.log('>>>>> this is the default... almost to the end');
-      }
+
+        }
     },
 
     /**
@@ -69,8 +67,8 @@ module.exports = yeoman.generators.Base.extend({
      */
     install: {
         default: function(){
-            console.log('>>>>> installing...');
-      }
+
+        }
     },
 
     /**
@@ -98,20 +96,30 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         buildApp: function(){
-          this.directory('web/app', 'web/app');
-          this.directory('web/components', 'web/components');
+            this.directory('web/app', 'web/app');
+            this.directory('web/components', 'web/components');
 
-          this.template('web/index.html', 'web/index.html', this.names);
-          this.template('web/app/app.js', 'web/app/app.js', this.names);
-          this.template('web/app/Api.js', 'web/app/Api.js', this.names);
-          this.template('web/app/app.css', 'web/app/app.css', this.names);
-          this.template('web/app/app.js', 'web/app/app.js', this.names);
-          this.template('web/app/main/main.controller.js', 'web/app/main/main.controller.js', this.names);
-          this.template('web/app/main/main.css', 'web/app/main/main.css', this.names);
-          this.template('web/app/main/main.html', 'web/app/main/main.html', this.names);
-          this.template('web/app/main/main.js', 'web/app/main/main.js', this.names);
-          this.template('web/components/navbar/navbar.controller.js', 'web/components/navbar/navbar.controller.js', this.names);
-          this.template('web/components/navbar/navbar.html', 'web/components/navbar/navbar.html', this.names);
+            this.template('web/index.html', 'web/index.html', this.names);
+            this.template('web/app/app.js', 'web/app/app.js', this.names);
+            this.template('web/app/Api.js', 'web/app/Api.js', this.names);
+            this.template('web/app/app.css', 'web/app/app.css', this.names);
+            this.template('web/app/app.js', 'web/app/app.js', this.names);
+            this.template('web/app/main/main.controller.js', 'web/app/main/main.controller.js', this.names);
+            this.template('web/app/main/main.css', 'web/app/main/main.css', this.names);
+            this.template('web/app/main/main.html', 'web/app/main/main.html', this.names);
+            this.template('web/app/main/main.js', 'web/app/main/main.js', this.names);
+            this.template('web/components/navbar/navbar.controller.js', 'web/components/navbar/navbar.controller.js', this.names);
+            this.template('web/components/navbar/navbar.html', 'web/components/navbar/navbar.html', this.names);
+        },
+
+        buildGarden: function() {
+            this.directory('garden/features/api', 'garden/features/api');
+            this.directory('garden/features/ui', 'garden/features/ui');
+
+            this.template('garden/features/api/Api.feature', 'garden/features/api/Api.feature', this.names);
+            this.template('garden/features/ui/definitions/crud.js', 'garden/features/ui/definitions/crud.js', this.names);
+            this.template('garden/features/ui/crud.feature', 'garden/features/ui/crud.feature', this.names);
+
         }
     },
 
@@ -120,7 +128,7 @@ module.exports = yeoman.generators.Base.extend({
      */
     end: {
         default: function(){
-           console.log('>>>>> the end is hear');
+
         }
     }
 });
