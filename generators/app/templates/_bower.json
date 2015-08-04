@@ -1,7 +1,14 @@
 {
-  "name": "<%= _.slugify(appname) %>",
+  "name": "source",
   "version": "0.0.1",
   "dependencies": {
-    <% if (bowerStandard) { %>"bootstrap": "https://github.com/twbs/bootstrap-sass/archive/v3.3.0.tar.gz"<% } %>
+    "angular": ">=1.2.*",
+    "json3": "~3.3.1",
+    "es5-shim": "~3.0.1",
+    "jquery": "~1.11.0",
+    "bootstrap": "~3.1.1",
+    "angular-bootstrap": "~0.11.0",
+    "font-awesome": ">=4.1.0",
+    "angular-ui-router": "~0.2.10"
   }
 }

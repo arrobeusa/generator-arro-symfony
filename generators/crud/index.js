@@ -47,10 +47,10 @@ module.exports = yeoman.generators.Base.extend({
             console.log('>>>>> configuring can be so boring');
 
             this.names = {
-                "resourceNameLower"        : this.resourceName.toLowerCase(),
-                "pluralResourceNameLower"  : this.pluralResourceName.toLowerCase(),
                 "resourceName"             : this.resourceName,
-                "pluralResourceName"       : this.pluralResourceName
+                "resourceNameLower"        : this.resourceName.toLowerCase(),
+                "pluralResourceName"       : this.pluralResourceName,
+                "pluralResourceNameLower"  : this.pluralResourceName.toLowerCase()
             }
         }
     },
@@ -91,6 +91,27 @@ module.exports = yeoman.generators.Base.extend({
 
         buildFormType: function(){
             this.template('_formType.php', 'src/AppBundle/Form/' + this.resourceName + 'Type.php', this.names);
+        },
+
+        buildFixtures: function(){
+            this.template('fixtures.js', 'garden/fixtures/mongo/' + this.resourceName + '.js', this.names);
+        },
+
+        buildApp: function(){
+          this.directory('web/app', 'web/app');
+          this.directory('web/components', 'web/components');
+
+          this.template('web/index.html', 'web/index.html', this.names);
+          this.template('web/app/app.js', 'web/app/app.js', this.names);
+          this.template('web/app/Api.js', 'web/app/Api.js', this.names);
+          this.template('web/app/app.css', 'web/app/app.css', this.names);
+          this.template('web/app/app.js', 'web/app/app.js', this.names);
+          this.template('web/app/main/main.controller.js', 'web/app/main/main.controller.js', this.names);
+          this.template('web/app/main/main.css', 'web/app/main/main.css', this.names);
+          this.template('web/app/main/main.html', 'web/app/main/main.html', this.names);
+          this.template('web/app/main/main.js', 'web/app/main/main.js', this.names);
+          this.template('web/components/navbar/navbar.controller.js', 'web/components/navbar/navbar.controller.js', this.names);
+          this.template('web/components/navbar/navbar.html', 'web/components/navbar/navbar.html', this.names);
         }
     },
 

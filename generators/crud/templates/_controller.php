@@ -70,7 +70,6 @@ class <%= pluralResourceName %>Controller extends Controller
         }
 
         return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
     /**
@@ -80,29 +79,32 @@ class <%= pluralResourceName %>Controller extends Controller
      */
     public function updateAction($id, Request $request)
     {
-        //$request->setRequestFormat('json');
-
         /** @var DocumentManager $dm */
         $dm = $this->get('doctrine_mongodb')->getManager();
 
-        $form = $this->createForm(new <%= resourceName %>Type(), new <%= resourceName %>(), array("method" => "PUT"));
+        /** @var <%= resourceName %> $<%= resourceNameLower %>*/
+        $<%= resourceNameLower %> = $dm->find('AppBundle:<%= resourceName %>', $id);
+
+        if(!$<%= resourceNameLower %>) {
+            throw new NotFoundHttpException("<%= resourceName %> not found");
+        }
+
+        $form = $this->createForm(new <%= resourceName %>Type(), $<%= resourceNameLower %>, array("method" => "PUT"));
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            /** @var <%= resourceName %> $<%= resourceNameLower %> */
+            /** @var <%= resourceName %> $<%= resourceNameLower %>*/
             $<%= resourceNameLower %> = $form->getData();
-            $<%= resourceNameLower %>->setId($id);
             $dm->persist($<%= resourceNameLower %>);
             $dm->flush();
 
             $view = View::create($<%= resourceNameLower %>);
         }
         else {
-            $view = View::create(array("message" => "<%= resourceName %> $id not found"), Response::HTTP_NOT_FOUND);
+            $view = View::create($form, Response::HTTP_BAD_REQUEST);
         }
 
         return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
     /**
@@ -126,7 +128,6 @@ class <%= pluralResourceName %>Controller extends Controller
         }
 
         return $this->get('fos_rest.view_handler')->handle($view);
-
     }
 
     /**

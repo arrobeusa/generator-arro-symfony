@@ -43,7 +43,7 @@ class <%= resourceName %>
         $this->name = $v;
     }
 
-    public function getName($v)
+    public function getName()
     {
         return $this->name;
     }
