@@ -1,4 +1,5 @@
 imports:
+    - { resource: parameters.php }
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
@@ -82,9 +83,9 @@ swiftmailer:
 doctrine_mongodb:
     connections:
         default:
-            server: mongodb://localhost:27017
+            server: "%mongo.host%"
             options: {}
-    default_database: symfony-stack
+    default_database: "%mongo.database%"
     document_managers:
         default:
             auto_mapping: true

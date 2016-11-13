@@ -36,6 +36,62 @@ module.exports = yeoman.generators.Base.extend({
                 this.pluralResourceName = answers.pluralResourceName;
                 done();
             }.bind(this));
+        },
+        appNameSlug: function() {
+          var done = this.async();
+          this.prompt({
+            type    : 'input',
+            name    : 'appNameSlug',
+            message : 'Lowercase, dashed (EX: messaging-service):',
+            default : this.resourceName + "s", // Default to current folder name
+            store   : true
+          }, function (answers) {
+            this.log(answers.appNameSlug);
+            this.appNameSlug = answers.appNameSlug;
+            done();
+          }.bind(this));
+        },
+        mongoHost: function () {
+          var done = this.async();
+          this.prompt({
+            type    : 'input',
+            name    : 'mongoHost',
+            message : 'Mongo Host to connect to: ',
+            default : 'localhost:27017',
+            store   : true
+          }, function (answers) {
+            this.log(answers.mongoHost);
+            this.mongoHost = answers.mongoHost;
+            done();
+          }.bind(this));
+        },
+        mongoDataPath: function () {
+          var done = this.async();
+          this.prompt({
+            type    : 'input',
+            name    : 'mongoDataPath',
+            message : 'Path to mongo data directory: ',
+            default : '//Users/Rob/Sites/mongodb/data',
+            store   : true
+          }, function (answers) {
+            this.log(answers.mongoDataPath);
+            this.mongoDataPath = answers.mongoDataPath;
+            done();
+          }.bind(this));
+        },
+        appOrganization: function () {
+          var done = this.async();
+          this.prompt({
+            type    : 'input',
+            name    : 'appOrganization',
+            message : 'EX: (Acme',
+            default : 'Acme',
+            store   : true
+          }, function (answers) {
+            this.log(answers.appOrganization);
+            this.appOrganization = answers.appOrganization;
+            done();
+          }.bind(this));
         }
     },
 
@@ -83,6 +139,10 @@ module.exports = yeoman.generators.Base.extend({
             this.template('_controller.php', 'src/AppBundle/Controller/' + this.pluralResourceName + 'Controller.php', this.names);
         },
 
+        buildErrorController: function(){
+            this.template('_error_controller.php', 'src/AppBundle/Controller/ErrorController.php', this.names);
+        },
+
         buildDocument: function(){
             this.template('_document.php', 'src/AppBundle/Document/' + this.resourceName + '.php', this.names);
         },
@@ -120,6 +180,24 @@ module.exports = yeoman.generators.Base.extend({
             this.template('garden/features/ui/definitions/crud.js', 'garden/features/ui/definitions/crud.js', this.names);
             this.template('garden/features/ui/crud.feature', 'garden/features/ui/crud.feature', this.names);
 
+        },
+
+        buildReadme: function() {
+          this.template('_README.md', '../README.md', {
+            appNameSlug: this.appNameSlug,
+            mongoHost:    this.mongoHost,
+            appOrganization: this.appOrganization
+          });
+        },
+        dockerize: function() {
+          this.template('_docker-compose.yml', '../docker-compose.yml', {
+            appNameSlug: this.appNameSlug,
+            mongoHost:    this.mongoHost,
+            appOrganization: this.appOrganization,
+            mongoDataPath: this.mongoDataPath
+          });
+          this.template('_Dockerfile', '../Dockerfile', {});
+          this.directory('build', '../build');
         }
     },
 

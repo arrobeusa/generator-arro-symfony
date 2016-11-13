@@ -290,7 +290,9 @@ module.exports = yeoman.generators.Base.extend({
         },
 
         buildParametersYml: function(){
-            this.template('app/config/parameters.yml', 'app/config.parameters.yml');
+            //this.template('app/config/parameters.yml', 'app/config/parameters.yml');
+            this.template('app/config/parameters.yml.dist', 'app/config/parameters.yml.dist');
+            this.template('app/config/parameters.php', 'app/config/parameters.php');
         },
 
         buildComposerJson: function(){
@@ -302,18 +304,21 @@ module.exports = yeoman.generators.Base.extend({
             this.template('app/config/config.yml', 'app/config/config.yml');
         },
 
+        buildConfigDev: function() {
+            this.template('app/config/config_dev.yml', 'app/config/config_dev.yml');
+        },
+
         buildAppKernel: function() {
             this.template('_AppKernel.php', 'app/AppKernel.php');
         },
 
-        buildAppTest: function() {
-          this.template('web/app_test.php', 'web/app_test.php');
+        copyWeb: function() {
+          this.directory('web', 'web');
         },
 
         copyGarden: function() {
           this.directory('garden', 'garden');
         }
-
     },
 
     install: function () {

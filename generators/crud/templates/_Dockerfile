@@ -1,0 +1,35 @@
+FROM registry.docker.private.linksynergy.com/rm-rant/centos6-apache-php-base
+MAINTAINER Robert Rotarius <robert@rotarius.com>
+
+ADD build/conf_custom/apache/vhosts.conf /root/config/apache/vhosts.conf
+ADD build/conf/ssh/client/arro.pub /root/conf/ssh/client/arro.pub
+ADD source /source
+
+RUN rm -rf /source/app/cache/*
+
+
+# A little hack... If using the RANT Symfony generator, an .htaccess file will be created and it breaks our scaffolded UI
+# This may not be the right place for this, but it was the easiest
+RUN rm -f /source/web/.htaccess
+
+RUN cp /source/app/config/parameters.yml.dist /source/app/config/parameters.yml
+ADD build/composer.phar /source/composer.phar
+RUN cd /source/ && php composer.phar install --no-interaction
+RUN chown -R web:web /source
+
+# Garden dependencies
+#COPY build/pkg/jre-7u17-linux-x64.gz jre.tar.gz
+#RUN set -x;\
+#    tar -xzf "jre.tar.gz" -C /usr/local --strip-components=1;\
+#    rm "jre.tar.gz"
+#
+#COPY build/pkg/node-v0.12.7-linux-x64.tar.gz nodejs.tgz
+#RUN set -x;\
+#    tar -xzf "nodejs.tgz" -C /usr/local --strip-components=1;\
+#    rm "nodejs.tgz"
+
+EXPOSE 80
+
+# Run entry point command:
+CMD /root/shell-apache-php/run.sh
+

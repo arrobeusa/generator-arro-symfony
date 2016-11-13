@@ -8,7 +8,7 @@
 /app/cache/*
 /app/config/parameters.yml
 /app/logs/*
-/build/
+/garden/logs
 /vendor/
 /bin/
 /composer.phar
